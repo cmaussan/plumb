@@ -17,8 +17,6 @@ sub struct2path {
     my $stations = shift;
     my $struct   = shift;
 
-    # http://test1204.rtgi.eu/graphite/render/?width=950&height=400&from=-36h&fontSize=10&title=Radar%20Prod%20-%20Global%20memory&targets=&until=&vtitle=&fontName=DroidSans&lineMode=slope&thickness=2&bgcolor=000000&fgcolor=CCCCCC&majorGridLineColor=%23ADADAD&minorGridLineColor=%23E5E5E5&yMin=&yMax=&areaMode=stacked&hideLegend=&target=alias(scale(color(monitoring.nagios.node4.mem_used%2C%22red%22)%2C1024)%2C%22used%22)&target=alias(scale(color(monitoring.nagios.node4.mem_buffers%2C%22blue%22)%2C1024)%2C%22buffers%22)&target=alias(scale(color(monitoring.nagios.node4.mem_cached%2C%22orange%22)%2C1024)%2C%22cached%22)&target=alias(scale(color(monitoring.nagios.node4.mem_free%2C%22green%22)%2C1024)%2C%22free%22)&_timestamp_=1348659987009#.png
-
     my $path = '/render/?';
 
     while( my ( $option, $value ) = each %{ $struct->{ global } } ) {
