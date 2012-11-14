@@ -6,6 +6,7 @@ A Dancer Backend/Dashboard for Graphite
 This is a WIP, help is welcome :)
 
 dashboard.yaml exemple one:
+
     "dashboard1":
       group: group1
       stations:
@@ -14,6 +15,7 @@ dashboard.yaml exemple one:
         - load
 
 dashboard.yaml exemple two:
+
     "dashboard1":
       group: group1
       stations:
@@ -24,6 +26,7 @@ dashboard.yaml exemple two:
         - { load: [ "station2" ] }
 
 dashboard.yaml exemple three:
+
     "dashboard1":
       group: group1
       stations:
@@ -33,6 +36,7 @@ dashboard.yaml exemple three:
         - { load: "foreach" }
 
 graph/load.yaml exemple:
+
     # Load graph global
     pattern: monitoring.nagios.__station__
     
