@@ -1,0 +1,11 @@
+
+<ul>
+<% FOREACH group IN groups %>
+    <li><% group.key %>
+    <ul>
+    <% FOREACH station IN group.value %>
+        <li><a href="<% station.url %>"><% station.name %></a>
+    <% END %>
+    </ul>
+<% END %>
+</ul>

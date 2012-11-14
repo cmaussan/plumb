@@ -1,0 +1,77 @@
+
+<script>
+
+function update_nav( from ) {
+    var regex  = /(-\d+)([a-z]+)/;
+    var result = regex.exec( from );
+    document.getElementById( 'ipt_timerange' ).value = result[1];
+    var select = document.getElementById( 'sel_timerange' );
+    select.namedItem( result[2] ).selected = true;
+} 
+
+
+window.onload=function() {
+    var timeModule = new EventDispatcher();
+    timeModule.html = document.getElementById( 'btn_timerange' );
+    
+    timeModule.html.addEventListener( 'click', function() {
+        var select = document.getElementById( 'sel_timerange' );
+        var input  = document.getElementById( 'ipt_timerange' );
+        var value = input.value + select.options[ select.selectedIndex ].value;
+
+        timeModule.dispatch('timeUpdated',{
+            from: value
+        });
+    });
+
+    var imageController = new EventDispatcher();
+    timeModule.bind('timeUpdated', function( event ) {
+        var from      = event.content.from
+        var url       = document.location.href;
+        var dashboard = "<% dashboard %>";
+        var width     = /width\=([^&]+)/.test( url ) ? RegExp.$1 : null;
+        var height    = /height\=([^&]+)/.test( url ) ? RegExp.$1 : null;
+
+        var request = new XMLHttpRequest();
+        var url     = "/urls/" + dashboard + "?from=" + from 
+            + ( ( width ) ? "&width=" + width : "" ) 
+            + ( ( height) ? "&height=" + height : "" );
+        request.open( "GET", url, true);
+        request.onreadystatechange = function ( ) {
+            if ( request.readyState != 4 || request.status != 200 ) return;
+            var data = JSON.parse( request.response );
+            imageController.dispatch( 'imagesReceived', { data: data } );
+        };
+        request.send();
+    } );
+
+    var imageDisplayer = new EventDispatcher();
+    imageController.bind('imagesReceived',function( event ) {
+        event.content.data.forEach( function( value, index ) {
+            document.getElementById( value.name ).src = value.url;
+        } );
+    } );
+
+
+    var from = /from\=([^&]+)/.test( document.location.href ) ? RegExp.$1 : "<% default_from %>";
+    update_nav( from );
+};
+
+
+</script>
+
+<div id="header">   
+    <span class="title"><a class="nav" href="/">&lt;</a> <% dashboard %></span>
+    <input type="text" id="ipt_timerange" value="">
+    <select id="sel_timerange" name="select">
+        <option name="min" value="min">minutes</option> 
+        <option name="h" value="h">hours</option>
+        <option name="d" value="d">days</option>
+        <option name="w" value="w">weeks</option>
+        <option name="month" value="month">months</option>
+    </select>
+    <input type="button" id="btn_timerange" value="gogogo">
+</div>
+<% FOREACH graph IN graphs %>
+<img id='<% graph.name %>' src='<% graph.url %>'>
+<% END %>

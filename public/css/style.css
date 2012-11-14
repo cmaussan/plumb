@@ -1,0 +1,38 @@
+body {
+    background-color: #000;
+    font-family: sans;
+    font-size: 1.2em;
+    color: #fff; 
+    margin: 5px;
+    padding: 0;
+}
+
+a {
+    color: #999; 
+}
+
+#header { 
+    margin: 0 0 3px 0;
+}
+
+#header .title {
+    font-size: 1.4em;
+}
+
+#header a.nav {
+    font-weight: bold;
+    color: #ff3399;
+    text-decoration: none;
+}
+
+#header a.nav:hover {
+    color: #ffff00;
+}
+
+
+#footer {
+    margin-top: 3px;
+    font-size: 0.6em;
+}
+
+

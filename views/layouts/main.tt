@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=<% settings.charset %>">
+    <title><% dashboard %> - Plumb</title>
+    <link rel="stylesheet" href="<% request.uri_base %>/css/style.css" />
+    <script src="<% request.uri_base %>/js/eventdispatcher.js"></script>
+  </head>
+  <body>
+    <% content %>
+    <div id="footer">
+    thanks to <a href="http://perldancer.org/">dancer</a> and <a href="http://vanilla-js.com/">vanilla.js</a>
+    </div>
+  </body>
+</html>
