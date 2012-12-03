@@ -1,5 +1,6 @@
 
 <script>
+/**
 
 function update_nav( from ) {
     var regex  = /(-\d+)([a-z]+)/;
@@ -57,20 +58,52 @@ window.onload=function() {
     update_nav( from );
 };
 
+**/
+window.onload=function() {
+    var url    = document.location.href;
+    var from   = /from\=([^&]+)/.test( url )   ? RegExp.$1 : '<% default_options.standard.from %>';
+    var width  = /width\=([^&]+)/.test( url )  ? RegExp.$1 : '<% default_options.standard.width %>';
+    var height = /height\=([^&]+)/.test( url ) ? RegExp.$1 : '<% default_options.standard.height %>';
+
+    document.getElementById( 'from' ).value   = from;
+    document.getElementById( 'width' ).value  = width;
+    document.getElementById( 'height' ).value = height;
+}
+
+function goes_mobile() {
+    var url      = document.location.href;
+    var base_url = /([^\?]+)/.test( url ) ? RegExp.$1 : null;
+    var from     = /from\=([^&]+)/.test( url )   ? RegExp.$1 : '<% default_options.mobile.from %>';
+    var width    = '<% default_options.mobile.width %>';
+    var height   = '<% default_options.mobile.height %>';
+
+    window.location = base_url + "?from=" + from 
+        + "&width=" + width 
+        + "&height=" + height;
+}
 
 </script>
 
-<div id="header">   
-    <span class="title"><a class="nav" href="/">&lt;</a> <% dashboard %></span>
-    <input type="text" id="ipt_timerange" value="">
-    <select id="sel_timerange" name="select">
-        <option name="min" value="min">minutes</option> 
-        <option name="h" value="h">hours</option>
-        <option name="d" value="d">days</option>
-        <option name="w" value="w">weeks</option>
-        <option name="month" value="month">months</option>
-    </select>
-    <input type="button" id="btn_timerange" value="gogogo">
+<div id="header">
+    <form method="GET" action="<% dashboard %>">
+        <span class="title"><a class="nav" href="/">&lt;</a> <% dashboard %></span>
+<!--        <input type="text" id="ipt_timerange" value="">-->
+<!--        <select id="sel_timerange" name="select">-->
+<!--            <option name="min" value="min">minutes</option> -->
+<!--            <option name="h" value="h">hours</option>-->
+<!--            <option name="d" value="d">days</option>-->
+<!--            <option name="w" value="w">weeks</option>-->
+<!--            <option name="month" value="month">months</option>-->
+<!--        </select>-->
+<!--        <input type="button" id="btn_timerange" value="gogogo">-->
+        <label for="from">from:</label><input type="text" name="from" id="from">
+        <label for="width">width:</label><input type="text" name="width" id="width">
+        <label for="height">height:</label><input type="text" name="height" id="height">
+        <input type="submit" value="GO! GO! GO!">
+    </form>
+    <form>
+        <input type="button" value="MOBILE!" onclick="goes_mobile();">
+    </form>    
 </div>
 <% FOREACH graph IN graphs %>
 <img id='<% graph.name %>' src='<% graph.url %>'>

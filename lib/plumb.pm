@@ -24,7 +24,7 @@ get '/' => sub {
     }
 
     template 'index', {
-        groups => $groups,
+        groups  => $groups,
     };
 };
 
@@ -37,9 +37,9 @@ get '/:dashboard' => sub {
     $options->{ from }   = params->{ from }   if( params->{ from } );
 
     template 'dashboard', {
-        dashboard    => $dashboard,
-        graphs       => _graph_urls( $dashboard, $options ),
-        default_from => setting( 'default_options' )->{ from },
+        dashboard       => $dashboard,
+        graphs          => _graph_urls( $dashboard, $options ),
+        default_options => setting( 'default_options' ),
     };
 };
 
@@ -86,7 +86,7 @@ sub _graph_url {
     my $graph    = shift;
 
     my $options = shift || {};
-    $options = { %{ setting( 'default_options' ) }, %$options };
+    $options = { %{ setting( 'default_options' )->{ standard } }, %$options };
 
     my $graph_file   = File::Spec->catfile( setting( 'graph_path' ), "$graph.yaml" );
     my $graph_struct = LoadFile( $graph_file );

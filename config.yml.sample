@@ -33,8 +33,11 @@ graphite_baseurl: "http://graphite_baseurl"
 dashboard_file: "/path/to/dashboard.yaml"
 graph_path: "/path/to/graph"
 default_options:
-  width: 500
-  height: 450
-  from: "-7d"
-
-
+  standard:
+    width: 500
+    height: 450
+    from: "-7d"
+  mobile:
+    width: 320
+    height: 288
+    from: "-6h"
